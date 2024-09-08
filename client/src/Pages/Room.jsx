@@ -244,7 +244,7 @@ const Room = () => {
             </div>
 
             <div className="absolute left-1/2 transform -translate-x-1/2 md:translate-x-0 top-6 md:left-6 z-40 border w-[300px] h-[200px] shadow-xl">
-                <VideoPreview stream={videoStream} hasVideo={videoStreamHasVideo} hasAudio={videoStreamHasAudio} />
+                <VideoPreview stream={videoStream} hasVideo={videoStreamHasVideo} hasAudio={videoStreamHasAudio} muted />
             </div>
 
             <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2 z-50 space-y-3">
