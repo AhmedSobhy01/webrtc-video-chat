@@ -31,11 +31,7 @@ const Room = () => {
     // WebRTC Peer Connection
     const peerConnection = useRef(
         new RTCPeerConnection({
-            iceServers: [
-                {
-                    urls: "stun:stun.l.google.com:19302",
-                },
-            ],
+            iceServers: [{ urls: "stun:stun.l.google.com:19302" }, { urls: "stun:stun.l.google.com:5349" }, { urls: "stun:stun1.l.google.com:3478" }, { urls: "stun:stun1.l.google.com:5349" }, { urls: "stun:stun2.l.google.com:19302" }, { urls: "stun:stun2.l.google.com:5349" }, { urls: "stun:stun3.l.google.com:3478" }, { urls: "stun:stun3.l.google.com:5349" }, { urls: "stun:stun4.l.google.com:19302" }, { urls: "stun:stun4.l.google.com:5349" }],
         })
     );
 
@@ -68,7 +64,7 @@ const Room = () => {
 
         verifyRoom(password)
             .then(() => {
-                navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
+                return navigator.mediaDevices.getUserMedia({ video: { width: { min: 640, ideal: 1280, max: 1920 }, height: { min: 400, ideal: 720, max: 1080 } }, audio: true }).then((stream) => {
                     setVideoStream(stream);
 
                     setVideoStreamHasVideo(stream.getVideoTracks().some((track) => track.enabled));
@@ -86,7 +82,11 @@ const Room = () => {
                 });
             })
             .catch((err) => {
-                setError(err.message);
+                if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
+                    setError("Please allow camera and microphone access to join the meeting by clicking on the lock icon in the address bar.");
+                } else {
+                    setError(err.message);
+                }
             })
             .finally(() => {
                 setIsLoading(false);
@@ -124,15 +124,10 @@ const Room = () => {
     // WebRTC Peer Connection Events and Handlers
     const bindEvents = () => {
         socket.on("user-connected", () => {
-            peerConnection.current
-                .createOffer()
-                .then((offer) => {
-                    peerConnection.current.setLocalDescription(offer);
-                    return offer;
-                })
-                .then((offer) => {
-                    socket.emit("offer", offer);
-                });
+            peerConnection.current.createOffer().then((offer) => {
+                peerConnection.current.setLocalDescription(offer);
+                socket.emit("offer", offer);
+            });
         });
 
         socket.on("user-disconnected", () => {
@@ -145,9 +140,6 @@ const Room = () => {
                 .then(() => peerConnection.current.createAnswer())
                 .then((answer) => {
                     peerConnection.current.setLocalDescription(answer);
-                    return answer;
-                })
-                .then((answer) => {
                     socket.emit("answer", answer);
                 });
         });
@@ -157,7 +149,7 @@ const Room = () => {
         });
 
         socket.on("candidate", (candidate) => {
-            if (peerConnection.current.signalingState === "stable") peerConnection.current.addIceCandidate(new RTCIceCandidate(candidate));
+            peerConnection.current?.addIceCandidate(new RTCIceCandidate(candidate));
         });
 
         socket.on("stateChange", ({ hasVideo, hasAudio }) => {
