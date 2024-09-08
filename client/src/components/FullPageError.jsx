@@ -3,7 +3,7 @@ import classes from "./FullPageError.module.css";
 
 const Error = ({ error }) => {
     return (
-        <div className="h-screen flex flex-col items-center justify-center px-3">
+        <div className="h-screen h-dvh flex flex-col items-center justify-center px-3">
             <svg xmlns="http://www.w3.org/2000/svg" width="120px" height="120px" viewBox="0 0 40 40" version="1.1" className={classes.svg}>
                 <defs>
                     <path d="M8.43205769 38.1906149C2.90905516 38.17423 0.630739568 34.2579195 3.34303632 29.4437542L16.0266682 6.93106212C18.7390819 2.11668929 23.1497045 2.11171534 25.8729434 6.91091845L38.7464812 29.5981394C41.4720152 34.4013872 39.1981662 38.2818882 33.6812163 38.2655212L8.43205769 38.1906149Z" id="path-1"></path>

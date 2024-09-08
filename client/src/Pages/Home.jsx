@@ -84,7 +84,7 @@ const Home = () => {
     };
 
     return (
-        <div className="h-screen flex items-center justify-center px-2">
+        <div className="h-screen h-dvh flex items-center justify-center px-2">
             <div className="flex flex-col items-center justify-center gap-8 text-white bg-gray-900 p-8 md:p-12 rounded-2xl shadow-lg min-w-md">
                 <div className="flex items-center gap-4 text-4xl md:text-5xl">
                     <FontAwesomeIcon icon={faComments} />

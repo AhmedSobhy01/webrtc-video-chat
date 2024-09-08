@@ -229,7 +229,7 @@ const Room = () => {
     if (error) return <FullPageError error={error} />;
 
     return (
-        <div className="h-screen relative">
+        <div className="h-screen h-dvh relative">
             <div className="h-full w-full">
                 {!peerVideoStream && <NoUserScreen />}
                 {peerVideoStream && <VideoPreview stream={peerVideoStream} hasVideo={peerVideoStreamHasVideo} hasAudio={peerVideoStreamHasAudio} />}
