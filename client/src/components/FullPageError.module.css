@@ -1,0 +1,61 @@
+.svg {
+    transition: transform 0.5s ease-out;
+}
+
+.redExclamation {
+    animation: bounce 0.5s ease-out forwards;
+    transform-origin: center center;
+}
+
+.exclamation {
+    opacity: 0;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: excl 1.5s ease forwards 0.5s;
+}
+
+.dot {
+    opacity: 0;
+    stroke-width: 30;
+    stroke-linecap: round;
+    animation: dot-fade 0.175s ease forwards 0.9s;
+}
+
+@keyframes excl {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes dot-fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+    60% {
+        transform: scale(1);
+    }
+    85% {
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
